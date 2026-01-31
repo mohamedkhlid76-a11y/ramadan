@@ -1,0 +1,1711 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>رمضان كريم - موقع إسلامي شامل</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&family=Scheherazade+New:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "ramadan-dark": "#0f172a",
+              "ramadan-blue": "#1e3a8a",
+              "ramadan-gold": "#fbbf24",
+              "ramadan-gold-light": "#fcd34d",
+              "ramadan-purple": "#7c3aed",
+              "ramadan-emerald": "#059669",
+              "ramadan-teal": "#14b8a6",
+            },
+            fontFamily: {
+              amiri: ["Amiri", "serif"],
+              tajawal: ["Tajawal", "sans-serif"],
+              quran: ["Scheherazade New", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+      @keyframes glow {
+        from { box-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24; }
+        to { box-shadow: 0 0 20px #fbbf24, 0 0 30px #fbbf24; }
+      }
+      @keyframes pulse-gold {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+      .stars {
+        background-image:
+          radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
+          radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+          radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0, 0, 0, 0));
+        background-repeat: repeat;
+        background-size: 200px 200px;
+      }
+      .islamic-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fbbf24' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .quran-text {
+        font-family: "Scheherazade New", serif;
+        line-height: 2.5;
+        font-size: 1.5rem;
+      }
+      .sura-item:hover, .hadith-item:hover, .adhkar-item:hover, .name-item:hover {
+        background: rgba(251, 191, 36, 0.1);
+        border-right: 3px solid #fbbf24;
+      }
+      .active-sura, .active-hadith, .active-adhkar, .active-name {
+        background: rgba(251, 191, 36, 0.2);
+        border-right: 3px solid #fbbf24;
+      }
+      .tasbih-btn:active {
+        transform: scale(0.95);
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #fbbf24;
+        border-radius: 5px;
+      }
+      .loader {
+        border: 3px solid rgba(251, 191, 36, 0.1);
+        border-top: 3px solid #fbbf24;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      .day-card {
+        transition: all 0.3s ease;
+      }
+      .day-card:hover {
+        transform: translateY(-5px);
+      }
+      .day-card.active {
+        border: 2px solid #fbbf24;
+        box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+      }
+      .task-checkbox:checked + label {
+        text-decoration: line-through;
+        opacity: 0.6;
+      }
+      .reciter-card {
+        transition: all 0.3s ease;
+      }
+      .reciter-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
+      }
+      .radio-btn {
+        transition: all 0.3s ease;
+      }
+      .radio-btn.active {
+        background: rgba(251, 191, 36, 0.3);
+        border-color: #fbbf24;
+      }
+      .progress-ring {
+        transform: rotate(-90deg);
+      }
+      .progress-ring-circle {
+        transition: stroke-dashoffset 0.35s;
+      }
+      .mushaf-card {
+        transition: all 0.3s ease;
+      }
+      .mushaf-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+      .audio-wave {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        height: 30px;
+      }
+      .audio-wave span {
+        width: 4px;
+        background: #fbbf24;
+        border-radius: 2px;
+        animation: wave 1s ease-in-out infinite;
+      }
+      .audio-wave span:nth-child(1) { animation-delay: 0s; height: 10px; }
+      .audio-wave span:nth-child(2) { animation-delay: 0.1s; height: 20px; }
+      .audio-wave span:nth-child(3) { animation-delay: 0.2s; height: 15px; }
+      .audio-wave span:nth-child(4) { animation-delay: 0.3s; height: 25px; }
+      .audio-wave span:nth-child(5) { animation-delay: 0.4s; height: 12px; }
+      @keyframes wave {
+        0%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(1.5); }
+      }
+      .khatmah-progress {
+        background: linear-gradient(90deg, #fbbf24 0%, #fcd34d 100%);
+        transition: width 0.5s ease;
+      }
+      .pagination-btn {
+        transition: all 0.3s ease;
+      }
+      .pagination-btn:hover:not(:disabled) {
+        background: rgba(251, 191, 36, 0.2);
+      }
+      .pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .pagination-btn.active {
+        background: #fbbf24;
+        color: #0f172a;
+      }
+      .category-btn {
+        transition: all 0.3s ease;
+      }
+      .category-btn:hover {
+        background: rgba(251, 191, 36, 0.1);
+      }
+      .category-btn.active {
+        background: rgba(251, 191, 36, 0.2);
+        border-right: 3px solid #fbbf24;
+      }
+      .adhkar-category {
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body class="bg-ramadan-dark text-white font-tajawal overflow-x-hidden">
+    <!-- Audio Control -->
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        id="audioToggle"
+        class="bg-ramadan-gold/20 hover:bg-ramadan-gold/40 border border-ramadan-gold text-ramadan-gold rounded-full p-3 transition-all duration-300 backdrop-blur-sm"
+      >
+        <i class="fas fa-volume-mute text-xl" id="audioIcon"></i>
+      </button>
+      <audio id="backgroundAudio" loop>
+        <source
+          src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_179da0a74c.mp3?filename=islamic-background-music-111783.mp3"
+          type="audio/mpeg"
+        />
+      </audio>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 bg-ramadan-dark/90 backdrop-blur-md border-b border-ramadan-gold/20">
+      <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <i class="fas fa-moon text-ramadan-gold text-2xl animate-float"></i>
+            <span class="text-2xl font-bold text-ramadan-gold font-amiri">رمضان كريم</span>
+          </div>
+          <div class="hidden xl:flex gap-3 text-sm font-medium">
+            <a href="#home" class="hover:text-ramadan-gold transition-colors">الرئيسية</a>
+            <a href="#random-verse" class="hover:text-ramadan-gold transition-colors">آية اليوم</a>
+            <a href="#quran-full" class="hover:text-ramadan-gold transition-colors">المصحف</a>
+            <a href="#tafsir" class="hover:text-ramadan-gold transition-colors">التفسير</a>
+            <a href="#reciters" class="hover:text-ramadan-gold transition-colors">القراء</a>
+            <a href="#radio" class="hover:text-ramadan-gold transition-colors">الإذاعة</a>
+            <a href="#hadith" class="hover:text-ramadan-gold transition-colors">الأحاديث</a>
+            <a href="#adhkar" class="hover:text-ramadan-gold transition-colors">الأذكار</a>
+            <a href="#allah-names" class="hover:text-ramadan-gold transition-colors">أسماء الله</a>
+            <a href="#moshaf" class="hover:text-ramadan-gold transition-colors">المصاحف</a>
+            <a href="#ramadan-tracker" class="hover:text-ramadan-gold transition-colors">رمضان</a>
+            <a href="#tasbih" class="hover:text-ramadan-gold transition-colors">السبحة</a>
+          </div>
+          <button class="xl:hidden text-ramadan-gold" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+      <div id="mobileMenu" class="hidden xl:hidden bg-ramadan-dark border-t border-ramadan-gold/20 max-h-[70vh] overflow-y-auto">
+        <div class="flex flex-col p-4 gap-3">
+          <a href="#home" class="hover:text-ramadan-gold py-2">الرئيسية</a>
+          <a href="#random-verse" class="hover:text-ramadan-gold py-2">آية اليوم</a>
+          <a href="#quran-full" class="hover:text-ramadan-gold py-2">المصحف الكريم</a>
+          <a href="#tafsir" class="hover:text-ramadan-gold py-2">التفسير</a>
+          <a href="#reciters" class="hover:text-ramadan-gold py-2">القراء</a>
+          <a href="#radio" class="hover:text-ramadan-gold py-2">إذاعة القرآن</a>
+          <a href="#hadith" class="hover:text-ramadan-gold py-2">الأحاديث</a>
+          <a href="#adhkar" class="hover:text-ramadan-gold py-2">الأذكار</a>
+          <a href="#allah-names" class="hover:text-ramadan-gold py-2">أسماء الله الحسنى</a>
+          <a href="#moshaf" class="hover:text-ramadan-gold py-2">المصاحف</a>
+          <a href="#ramadan-tracker" class="hover:text-ramadan-gold py-2">تتبع رمضان</a>
+          <a href="#tasbih" class="hover:text-ramadan-gold py-2">السبحة</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      <div class="absolute inset-0 stars opacity-50"></div>
+      <div class="absolute inset-0 islamic-pattern opacity-30"></div>
+      <div class="absolute top-20 left-10 animate-float">
+        <i class="fas fa-moon text-6xl text-ramadan-gold opacity-40"></i>
+      </div>
+      <div class="container mx-auto px-4 text-center relative z-10">
+        <div class="mb-8">
+          <span class="inline-block px-6 py-2 rounded-full bg-ramadan-gold/10 border border-ramadan-gold/30 text-ramadan-gold text-sm mb-6">
+            🌙 بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+          </span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 font-amiri text-transparent bg-clip-text bg-gradient-to-r from-ramadan-gold via-ramadan-gold-light to-ramadan-gold">
+          رمضان كريم
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+          شهر القرآن والرحمة، حيث تفتح أبواب الجنة وتُصفد الشياطين
+        </p>
+        <!-- Countdown Timer -->
+        <div class="glass-effect rounded-2xl p-8 max-w-3xl mx-auto mb-12">
+          <h3 class="text-ramadan-gold text-lg mb-6 font-bold">الوقت المتبقي للإفطار</h3>
+          <div class="grid grid-cols-4 gap-4" id="countdown">
+            <div class="text-center">
+              <div class="text-3xl md:text-4xl font-bold text-ramadan-gold" id="hours">00</div>
+              <div class="text-sm text-gray-400 mt-2">ساعة</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl md:text-4xl font-bold text-ramadan-gold" id="minutes">00</div>
+              <div class="text-sm text-gray-400 mt-2">دقيقة</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl md:text-4xl font-bold text-ramadan-gold" id="seconds">00</div>
+              <div class="text-sm text-gray-400 mt-2">ثانية</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl md:text-4xl font-bold text-ramadan-emerald" id="ampm">م</div>
+              <div class="text-sm text-gray-400 mt-2">ص/م</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+          <button onclick="scrollToSection('quran-full')" class="px-8 py-3 bg-ramadan-gold text-ramadan-dark rounded-full font-bold hover:bg-ramadan-gold-light transition-all transform hover:scale-105">
+            اقرأ القرآن
+          </button>
+          <button onclick="scrollToSection('ramadan-tracker')" class="px-8 py-3 border-2 border-ramadan-gold text-ramadan-gold rounded-full font-bold hover:bg-ramadan-gold/10 transition-all">
+            تتبع رمضان
+          </button>
+        </div>
+      </div>
+      <div class="absolute bottom-0 left-0 right-0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="fill-ramadan-dark">
+          <path fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Random Verse Section -->
+    <section id="random-verse" class="py-20 bg-gradient-to-b from-ramadan-dark to-ramadan-blue/20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-8">
+            <span class="text-ramadan-gold text-sm font-bold tracking-wider">تدبر واعتبر</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">آية عشوائية من القرآن</h2>
+          </div>
+          <div class="glass-effect rounded-3xl p-8 md:p-12 relative overflow-hidden group hover:border-ramadan-gold/30 transition-all duration-500 border border-ramadan-gold/20">
+            <div class="absolute top-4 right-4 text-ramadan-gold/20 text-6xl font-amiri">❝</div>
+            <div class="absolute bottom-4 left-4 text-ramadan-gold/20 text-6xl font-amiri">❞</div>
+            <div class="relative z-10 text-center">
+              <div class="mb-6" id="randomVerseLoading">
+                <div class="loader mx-auto"></div>
+              </div>
+              <div id="randomVerseContent" class="hidden">
+                <blockquote class="text-2xl md:text-3xl font-amiri leading-loose mb-6 text-gray-100 quran-text" id="randomAyah"></blockquote>
+                <div class="text-ramadan-gold font-bold text-lg mb-4" id="randomReference"></div>
+                <button onclick="loadRandomVerse()" class="mt-6 px-6 py-3 rounded-full bg-ramadan-gold/20 border border-ramadan-gold/30 text-ramadan-gold hover:bg-ramadan-gold/30 transition-all flex items-center gap-2 mx-auto">
+                  <i class="fas fa-sync-alt"></i> آية أخرى
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full Quran Section -->
+    <section id="quran-full" class="py-20 min-h-screen">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">كتاب الله الكريم</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">المصحف الشريف</h2>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto h-[80vh]">
+          <div class="lg:w-1/3 glass-effect rounded-2xl overflow-hidden flex flex-col">
+            <div class="p-4 border-b border-ramadan-gold/20 bg-ramadan-gold/10 flex justify-between items-center">
+              <span class="font-bold text-ramadan-gold">قائمة السور</span>
+              <div id="quranLoading" class="loader w-6 h-6 border-2"></div>
+            </div>
+            <div class="overflow-y-auto flex-1 p-2" id="suraList"></div>
+          </div>
+          <div class="lg:w-2/3 glass-effect rounded-2xl p-8 flex flex-col relative">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-ramadan-gold/20">
+              <h3 class="text-2xl font-bold text-ramadan-gold font-amiri" id="currentSuraName">اختر سورة لقراءتها</h3>
+              <div class="flex gap-2">
+                <button onclick="changeFontSize(-1)" class="w-8 h-8 rounded bg-ramadan-gold/20 text-ramadan-gold hover:bg-ramadan-gold/30 transition-all">-</button>
+                <button onclick="changeFontSize(1)" class="w-8 h-8 rounded bg-ramadan-gold/20 text-ramadan-gold hover:bg-ramadan-gold/30 transition-all">+</button>
+              </div>
+            </div>
+            <div class="flex-1 overflow-y-auto text-center" id="quranContent">
+              <div class="flex flex-col items-center justify-center h-full text-gray-400">
+                <i class="fas fa-book-open text-6xl mb-4 text-ramadan-gold/30"></i>
+                <p>اختر سورة من القائمة لعرض آياتها</p>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-ramadan-gold/20 text-center text-sm text-gray-400">
+              <span id="ayaCount">0</span> آية
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tafsir Section -->
+    <section id="tafsir" class="py-20 bg-gradient-to-b from-ramadan-blue/20 to-ramadan-dark">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">تفسير القرآن الكريم</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">الخلاصة من تفسير الطبري</h2>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto">
+          <div class="lg:w-1/3 glass-effect rounded-2xl overflow-hidden flex flex-col max-h-[70vh]">
+            <div class="p-4 border-b border-ramadan-gold/20 bg-ramadan-gold/10">
+              <span class="font-bold text-ramadan-gold">قائمة التفاسير</span>
+            </div>
+            <div class="overflow-y-auto flex-1 p-2" id="tafsirList">
+              <div class="text-center p-8">
+                <div class="loader mx-auto"></div>
+                <p class="text-gray-400 mt-4">جاري تحميل التفاسير...</p>
+              </div>
+            </div>
+          </div>
+          <div class="lg:w-2/3 glass-effect rounded-2xl p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-4 pb-4 border-b border-ramadan-gold/20">
+              <h3 class="text-xl font-bold text-ramadan-gold font-amiri" id="currentTafsirName">اختر تفسيراً للاستماع</h3>
+            </div>
+            <div id="tafsirPlayer" class="hidden">
+              <div class="bg-ramadan-dark/50 rounded-xl p-6 mb-4">
+                <div class="flex items-center gap-4 mb-4">
+                  <button id="tafsirPlayBtn" onclick="toggleTafsirPlay()" class="w-14 h-14 rounded-full bg-ramadan-gold text-ramadan-dark flex items-center justify-center text-xl hover:bg-ramadan-gold-light transition-all">
+                    <i class="fas fa-play"></i>
+                  </button>
+                  <div class="flex-1">
+                    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div id="tafsirProgress" class="h-full bg-ramadan-gold transition-all" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-400 mt-1">
+                      <span id="tafsirCurrentTime">00:00</span>
+                      <span id="tafsirDuration">00:00</span>
+                    </div>
+                  </div>
+                </div>
+                <div id="tafsirWave" class="audio-wave justify-center hidden">
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <div id="tafsirContent" class="text-center text-gray-400 py-12">
+              <i class="fas fa-headphones text-6xl mb-4 text-ramadan-gold/30"></i>
+              <p>اختر تفسيراً من القائمة للاستماع</p>
+            </div>
+            <audio id="tafsirAudio"></audio>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quran Reciters Section -->
+    <section id="reciters" class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">استمع إلى القرآن الكريم</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">قراء القرآن الكريم</h2>
+        </div>
+        <div class="max-w-6xl mx-auto">
+          <div id="recitersList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+            <div class="col-span-full text-center py-8">
+              <div class="loader mx-auto"></div>
+              <p class="text-gray-400 mt-4">جاري تحميل القراء...</p>
+            </div>
+          </div>
+          <div id="reciterPlayer" class="glass-effect rounded-2xl p-6 hidden">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+              <div class="w-24 h-24 rounded-full bg-ramadan-gold/20 flex items-center justify-center border-4 border-ramadan-gold/30">
+                <i class="fas fa-user text-4xl text-ramadan-gold"></i>
+              </div>
+              <div class="flex-1 w-full">
+                <h4 id="reciterName" class="text-xl font-bold text-ramadan-gold mb-2"></h4>
+                <p id="currentSurahName" class="text-gray-400 mb-4"></p>
+                <div class="flex items-center gap-4">
+                  <button onclick="toggleReciterPlay()" class="w-12 h-12 rounded-full bg-ramadan-gold text-ramadan-dark flex items-center justify-center hover:bg-ramadan-gold-light transition-all">
+                    <i class="fas fa-play" id="reciterPlayIcon"></i>
+                  </button>
+                  <div class="flex-1">
+                    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div id="reciterProgress" class="h-full bg-ramadan-gold transition-all" style="width: 0%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="reciterSuraList" class="mt-4"></div>
+          </div>
+          <audio id="reciterAudio"></audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quran Radio Section -->
+    <section id="radio" class="py-20 bg-gradient-to-b from-ramadan-dark to-ramadan-blue/20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">بث مباشر</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">إذاعة القرآن الكريم</h2>
+        </div>
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass-effect rounded-2xl p-6 text-center">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-ramadan-gold/20 flex items-center justify-center">
+              <i class="fas fa-broadcast-tower text-3xl text-ramadan-gold"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">إذاعة القرآن الكريم - القاهرة</h3>
+            <p class="text-gray-400 text-sm mb-4">بث مباشر من جمهورية مصر العربية</p>
+            <button onclick="toggleRadio('cairo')" id="cairoBtn" class="radio-btn px-6 py-3 rounded-full border border-ramadan-gold/30 text-ramadan-gold hover:bg-ramadan-gold/20 transition-all flex items-center gap-2 mx-auto">
+              <i class="fas fa-play" id="cairoIcon"></i>
+              <span id="cairoText">استمع الآن</span>
+            </button>
+            <div id="cairoWave" class="audio-wave justify-center mt-4 hidden">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="glass-effect rounded-2xl p-6 text-center">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-ramadan-emerald/20 flex items-center justify-center">
+              <i class="fas fa-broadcast-tower text-3xl text-ramadan-emerald"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">إذاعة القرآن الكريم - السعودية</h3>
+            <p class="text-gray-400 text-sm mb-4">بث مباشر من المملكة العربية السعودية</p>
+            <button onclick="toggleRadio('saudi')" id="saudiBtn" class="radio-btn px-6 py-3 rounded-full border border-ramadan-emerald/30 text-ramadan-emerald hover:bg-ramadan-emerald/20 transition-all flex items-center gap-2 mx-auto">
+              <i class="fas fa-play" id="saudiIcon"></i>
+              <span id="saudiText">استمع الآن</span>
+            </button>
+            <div id="saudiWave" class="audio-wave justify-center mt-4 hidden">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+        <audio id="radioAudio"></audio>
+      </div>
+    </section>
+
+    <!-- Hadith Section - ALL HADITHS -->
+    <section id="hadith" class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">سنة النبي ﷺ</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">الأحاديث الصحيحة</h2>
+          <p class="text-gray-400 mt-2" id="hadithStats">جاري تحميل الأحاديث...</p>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto">
+          <!-- Hadith Categories -->
+          <div class="lg:w-1/4 space-y-2">
+            <button onclick="loadHadithCategory('random')" class="category-btn w-full text-right p-4 glass-effect rounded-xl active" id="hadith-btn-random">
+              <i class="fas fa-random ml-2"></i> حديث عشوائي
+            </button>
+            <button onclick="loadHadithCategory('bukhari')" class="category-btn w-full text-right p-4 glass-effect rounded-xl" id="hadith-btn-bukhari">
+              <i class="fas fa-book ml-2"></i> صحيح البخاري
+            </button>
+            <button onclick="loadHadithCategory('muslim')" class="category-btn w-full text-right p-4 glass-effect rounded-xl" id="hadith-btn-muslim">
+              <i class="fas fa-book ml-2"></i> صحيح مسلم
+            </button>
+            <div class="glass-effect rounded-xl p-4 mt-4">
+              <h4 class="font-bold text-ramadan-gold mb-2"><i class="fas fa-search ml-2"></i> البحث في الأحاديث</h4>
+              <input type="text" id="hadithSearch" placeholder="اكتب كلمة للبحث..." class="w-full p-3 rounded-lg bg-ramadan-dark/50 border border-ramadan-gold/30 text-white placeholder-gray-500 focus:outline-none focus:border-ramadan-gold" onkeyup="searchHadith(this.value)">
+            </div>
+          </div>
+          <!-- Hadith Display -->
+          <div class="lg:w-3/4 glass-effect rounded-2xl p-6 relative min-h-[500px]">
+            <div id="hadithLoading" class="absolute inset-0 flex items-center justify-center hidden">
+              <div class="loader"></div>
+            </div>
+            <div id="hadithContainer" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+              <div class="text-center text-gray-400 py-20">
+                <i class="fas fa-book text-6xl mb-4 text-ramadan-gold/30"></i>
+                <p>اختر نوع الحديث لعرضه</p>
+              </div>
+            </div>
+            <!-- Pagination -->
+            <div id="hadithPagination" class="flex justify-center gap-2 mt-6 pt-4 border-t border-ramadan-gold/20 hidden">
+              <button onclick="changePage(-1)" class="pagination-btn px-4 py-2 rounded-lg bg-white/5" id="prevPage">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <span id="pageInfo" class="px-4 py-2 text-gray-400">صفحة 1 من 1</span>
+              <button onclick="changePage(1)" class="pagination-btn px-4 py-2 rounded-lg bg-white/5" id="nextPage">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Adhkar Section - ALL ADHKAR -->
+    <section id="adhkar" class="py-20 bg-gradient-to-b from-ramadan-blue/20 to-ramadan-dark">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">أذكار يومية</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">الأذكار والأدعية</h2>
+          <p class="text-gray-400 mt-2" id="adhkarStats">جاري تحميل الأذكار...</p>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto">
+          <!-- Categories -->
+          <div class="lg:w-1/3 glass-effect rounded-2xl p-4 max-h-[70vh] overflow-y-auto adhkar-category" id="adhkarCategories">
+            <h4 class="font-bold text-ramadan-gold mb-4 sticky top-0 bg-ramadan-dark/90 p-2 rounded">التصنيفات</h4>
+            <div class="text-center py-4">
+              <div class="loader mx-auto w-8 h-8"></div>
+            </div>
+          </div>
+          <!-- Adhkar Display -->
+          <div class="lg:w-2/3 glass-effect rounded-2xl p-6 relative min-h-[500px]">
+            <div id="adhkarLoading" class="absolute inset-0 flex items-center justify-center hidden">
+              <div class="loader"></div>
+            </div>
+            <div id="adhkarContainer" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+              <div class="text-center text-gray-400 py-20">
+                <i class="fas fa-praying-hands text-6xl mb-4 text-ramadan-gold/30"></i>
+                <p>اختر فئة الأذكار لعرضها</p>
+              </div>
+            </div>
+            <!-- Counter for adhkar -->
+            <div id="adhkarCounter" class="hidden mt-4 pt-4 border-t border-ramadan-gold/20">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-400">عدد المرات: <span id="adhkarCount" class="text-ramadan-gold font-bold">0</span></span>
+                <button onclick="resetAdhkarCounter()" class="px-4 py-2 rounded-lg bg-ramadan-gold/20 text-ramadan-gold hover:bg-ramadan-gold/30 transition-all">
+                  <i class="fas fa-redo ml-1"></i> إعادة العد
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 99 Names of Allah Section -->
+    <section id="allah-names" class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">تعرف على الله</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">أسماء الله الحسنى</h2>
+          <p class="text-gray-400 mt-2">وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا</p>
+        </div>
+        <div id="namesContainer" class="max-w-6xl mx-auto">
+          <div class="text-center py-8">
+            <div class="loader mx-auto"></div>
+            <p class="text-gray-400 mt-4">جاري تحميل الأسماء...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mushaf Types Section -->
+    <section id="moshaf" class="py-20 bg-gradient-to-b from-ramadan-dark to-ramadan-blue/20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">مصاحف للتحميل</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">أنواع المصاحف</h2>
+        </div>
+        <div id="moshafContainer" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="col-span-full text-center py-8">
+            <div class="loader mx-auto"></div>
+            <p class="text-gray-400 mt-4">جاري تحميل المصاحف...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ramadan Tracker Section -->
+    <section id="ramadan-tracker" class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">تتبع عباداتك في رمضان</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">tracker رمضان</h2>
+        </div>
+        <!-- Days Strip -->
+        <div class="max-w-6xl mx-auto mb-8">
+          <div class="glass-effect rounded-2xl p-4">
+            <div class="flex gap-2 overflow-x-auto pb-2" id="daysStrip">
+              <!-- Days will be generated here -->
+            </div>
+          </div>
+        </div>
+        <!-- Current Day Details -->
+        <div class="max-w-4xl mx-auto">
+          <div class="glass-effect rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-2xl font-bold text-ramadan-gold" id="currentDayTitle">اليوم الأول من رمضان</h3>
+              <span class="text-gray-400" id="currentDate"></span>
+            </div>
+            <!-- Daily Tasks -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div class="space-y-3">
+                <h4 class="font-bold text-ramadan-gold mb-3"><i class="fas fa-tasks ml-2"></i> المهام اليومية</h4>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="prayer">
+                  <span>الصلوات المفروضة في وقتها</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="taraweeh">
+                  <span>صلاة التراويح</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="sunnah">
+                  <span>السنن الرواتب</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="charity">
+                  <span>الصدقة</span>
+                </label>
+              </div>
+              <div class="space-y-3">
+                <h4 class="font-bold text-ramadan-gold mb-3"><i class="fas fa-heart ml-2"></i> الأذكار والأدعية</h4>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="family">
+                  <span>صلة الرحم</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="dua">
+                  <span>الدعاء</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="istighfar">
+                  <span>الاستغفار</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="tasbeeh">
+                  <span>التسبيح</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-all">
+                  <input type="checkbox" class="task-checkbox w-5 h-5 rounded border-ramadan-gold/30" data-task="iftar">
+                  <span>إفطار صائم</span>
+                </label>
+              </div>
+            </div>
+            <!-- Daily Notes -->
+            <div class="mb-6">
+              <h4 class="font-bold text-ramadan-gold mb-3"><i class="fas fa-sticky-note ml-2"></i> ملاحظات اليوم</h4>
+              <textarea id="dayNote" class="w-full p-4 rounded-xl bg-ramadan-dark/50 border border-ramadan-gold/30 text-white placeholder-gray-500 focus:outline-none focus:border-ramadan-gold resize-none" rows="3" placeholder="اكتب ملاحظاتك لهذا اليوم..."></textarea>
+            </div>
+            <!-- Khatmah Progress -->
+            <div class="glass-effect rounded-xl p-4">
+              <h4 class="font-bold text-ramadan-gold mb-3"><i class="fas fa-book-open ml-2"></i> ختمة القرآن</h4>
+              <div class="flex flex-wrap gap-4 mb-4">
+                <button onclick="setKhatmah(1)" class="khatmah-btn px-4 py-2 rounded-lg bg-white/5 hover:bg-ramadan-gold/20 transition-all border border-transparent" data-khatmah="1">
+                  ختمة واحدة (4 صفحات/صلاة)
+                </button>
+                <button onclick="setKhatmah(2)" class="khatmah-btn px-4 py-2 rounded-lg bg-white/5 hover:bg-ramadan-gold/20 transition-all border border-transparent" data-khatmah="2">
+                  ختمتان (8 صفحات/صلاة)
+                </button>
+                <button onclick="setKhatmah(3)" class="khatmah-btn px-4 py-2 rounded-lg bg-white/5 hover:bg-ramadan-gold/20 transition-all border border-transparent" data-khatmah="3">
+                  3 ختمات (12 صفحة/صلاة)
+                </button>
+              </div>
+              <div class="bg-white/10 rounded-full h-4 overflow-hidden">
+                <div id="khatmahProgress" class="khatmah-progress h-full rounded-full" style="width: 0%"></div>
+              </div>
+              <p class="text-sm text-gray-400 mt-2 text-center">
+                <span id="pagesRead">0</span> / <span id="totalPages">604</span> صفحة (<span id="khatmahPercent">0</span>%)
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Electronic Tasbih -->
+    <section id="tasbih" class="py-20 bg-gradient-to-b from-ramadan-blue/20 to-ramadan-dark">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">سبحة إلكترونية</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">سَبِّحْ بِاسْمِ رَبِّكَ</h2>
+        </div>
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Main Counter -->
+          <div class="glass-effect rounded-3xl p-8 text-center border-2 border-ramadan-gold/30">
+            <div class="mb-6">
+              <select id="tasbihType" onchange="changeTasbihType(this.value)" class="bg-ramadan-dark/50 border border-ramadan-gold/30 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-ramadan-gold w-full">
+                <option value="subhanallah">سبحان الله (33)</option>
+                <option value="alhamdulillah">الحمد لله (33)</option>
+                <option value="allahuakbar">الله أكبر (33)</option>
+                <option value="lailaha">لا إله إلا الله (100)</option>
+                <option value="salawat">الصلاة على النبي (100)</option>
+              </select>
+            </div>
+            <div class="relative w-64 h-64 mx-auto mb-8 cursor-pointer" onclick="incrementTasbih()">
+              <div class="absolute inset-0 rounded-full border-4 border-ramadan-gold/20"></div>
+              <div class="absolute inset-2 rounded-full border-2 border-ramadan-gold/40 flex items-center justify-center bg-ramadan-dark/50 backdrop-blur select-none">
+                <div>
+                  <div class="text-6xl font-bold text-ramadan-gold mb-2" id="tasbihCount">0</div>
+                  <div class="text-sm text-gray-400" id="tasbihTarget">الهدف: 33</div>
+                </div>
+              </div>
+              <svg class="absolute inset-0 transform -rotate-90 w-full h-full pointer-events-none">
+                <circle cx="50%" cy="50%" r="48%" fill="none" stroke="currentColor" stroke-width="4" class="text-ramadan-gold/20"/>
+                <circle id="progressCircle" cx="50%" cy="50%" r="48%" fill="none" stroke="currentColor" stroke-width="4" class="text-ramadan-gold transition-all duration-300" stroke-dasharray="301.59" stroke-dashoffset="301.59" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="flex gap-4 justify-center">
+              <button onclick="incrementTasbih()" class="tasbih-btn w-24 h-24 rounded-full bg-ramadan-gold text-ramadan-dark text-3xl font-bold hover:bg-ramadan-gold-light transition-all shadow-lg shadow-ramadan-gold/30 flex items-center justify-center">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button onclick="resetTasbih()" class="w-16 h-16 rounded-full bg-white/10 text-white hover:bg-red-500/20 hover:text-red-400 transition-all flex items-center justify-center">
+                <i class="fas fa-redo"></i>
+              </button>
+            </div>
+            <div class="mt-6 text-ramadan-gold font-amiri text-2xl font-bold" id="tasbihText">سبحان الله</div>
+          </div>
+          <!-- Quick Access -->
+          <div class="space-y-4">
+            <div class="glass-effect rounded-2xl p-6">
+              <h4 class="text-xl font-bold mb-4 text-ramadan-gold">تسابيح مفضلة</h4>
+              <div class="space-y-3">
+                <button onclick="setTasbih('subhanallah', 33)" class="w-full p-4 rounded-xl bg-white/5 hover:bg-ramadan-gold/10 transition-all text-right flex justify-between items-center group">
+                  <div>
+                    <div class="font-bold group-hover:text-ramadan-gold transition-colors">سبحان الله</div>
+                    <div class="text-sm text-gray-400">33 مرة</div>
+                  </div>
+                  <i class="fas fa-chevron-left text-gray-600 group-hover:text-ramadan-gold"></i>
+                </button>
+                <button onclick="setTasbih('alhamdulillah', 33)" class="w-full p-4 rounded-xl bg-white/5 hover:bg-ramadan-gold/10 transition-all text-right flex justify-between items-center group">
+                  <div>
+                    <div class="font-bold group-hover:text-ramadan-gold transition-colors">الحمد لله</div>
+                    <div class="text-sm text-gray-400">33 مرة</div>
+                  </div>
+                  <i class="fas fa-chevron-left text-gray-600 group-hover:text-ramadan-gold"></i>
+                </button>
+                <button onclick="setTasbih('allahuakbar', 33)" class="w-full p-4 rounded-xl bg-white/5 hover:bg-ramadan-gold/10 transition-all text-right flex justify-between items-center group">
+                  <div>
+                    <div class="font-bold group-hover:text-ramadan-gold transition-colors">الله أكبر</div>
+                    <div class="text-sm text-gray-400">33 مرة</div>
+                  </div>
+                  <i class="fas fa-chevron-left text-gray-600 group-hover:text-ramadan-gold"></i>
+                </button>
+                <button onclick="setTasbih('lailaha', 100)" class="w-full p-4 rounded-xl bg-white/5 hover:bg-ramadan-gold/10 transition-all text-right flex justify-between items-center group">
+                  <div>
+                    <div class="font-bold group-hover:text-ramadan-gold transition-colors">لا إله إلا الله</div>
+                    <div class="text-sm text-gray-400">100 مرة</div>
+                  </div>
+                  <i class="fas fa-chevron-left text-gray-600 group-hover:text-ramadan-gold"></i>
+                </button>
+              </div>
+            </div>
+            <div class="glass-effect rounded-2xl p-6">
+              <h4 class="text-xl font-bold mb-4 text-ramadan-gold">فضل التسبيح</h4>
+              <p class="text-gray-300 text-sm leading-relaxed">
+                قال النبي ﷺ: «كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن: سبحان الله وبحمده، سبحان الله العظيم»
+              </p>
+              <div class="mt-4 text-xs text-gray-500">رواه البخاري</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prayer Times -->
+    <section id="prayer" class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <span class="text-ramadan-gold text-sm font-bold tracking-wider">مواقيت الصلاة</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 font-amiri">أوقات الصلاة</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
+          <div class="glass-effect rounded-2xl p-6 text-center border-t-4 border-blue-400">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-400/20 flex items-center justify-center">
+              <i class="fas fa-cloud-sun text-2xl text-blue-400"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">الفجر</h3>
+            <div class="text-2xl font-bold text-ramadan-gold mb-1">4:30</div>
+            <div class="text-xs text-gray-400">صباحاً</div>
+          </div>
+          <div class="glass-effect rounded-2xl p-6 text-center border-t-4 border-yellow-400">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-yellow-400/20 flex items-center justify-center">
+              <i class="fas fa-sun text-2xl text-yellow-400"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">الظهر</h3>
+            <div class="text-2xl font-bold text-ramadan-gold mb-1">12:15</div>
+            <div class="text-xs text-gray-400">ظهراً</div>
+          </div>
+          <div class="glass-effect rounded-2xl p-6 text-center border-t-4 border-orange-400">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-orange-400/20 flex items-center justify-center">
+              <i class="fas fa-cloud text-2xl text-orange-400"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">العصر</h3>
+            <div class="text-2xl font-bold text-ramadan-gold mb-1">3:45</div>
+            <div class="text-xs text-gray-400">عصراً</div>
+          </div>
+          <div class="glass-effect rounded-2xl p-6 text-center border-t-4 border-ramadan-gold animate-pulse">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-ramadan-gold/20 flex items-center justify-center">
+              <i class="fas fa-moon text-2xl text-ramadan-gold"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-ramadan-gold">المغرب</h3>
+            <div class="text-2xl font-bold text-ramadan-gold mb-1">6:20</div>
+            <div class="text-xs text-gray-400">مساءً</div>
+          </div>
+          <div class="glass-effect rounded-2xl p-6 text-center border-t-4 border-indigo-400">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-indigo-400/20 flex items-center justify-center">
+              <i class="fas fa-star text-2xl text-indigo-400"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">العشاء</h3>
+            <div class="text-2xl font-bold text-ramadan-gold mb-1">7:45</div>
+            <div class="text-xs text-gray-400">مساءً</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-ramadan-dark border-t border-ramadan-gold/20 py-12 relative overflow-hidden">
+      <div class="absolute inset-0 stars opacity-30"></div>
+      <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center">
+          <div class="flex justify-center items-center gap-3 mb-6">
+            <i class="fas fa-moon text-ramadan-gold text-3xl"></i>
+            <span class="text-3xl font-bold text-ramadan-gold font-amiri">رمضان كريم</span>
+          </div>
+          <p class="text-gray-400 mb-6">تقبل الله صيامكم وقيامكم</p>
+          <div class="mb-6 py-4 border-t border-b border-white/10 inline-block px-8">
+            <p class="text-ramadan-gold font-bold text-lg">
+              <i class="fas fa-code ml-2"></i>
+              Developed by <span class="text-2xl mx-2">bnkhlid</span>
+            </p>
+            <p class="text-gray-500 text-sm mt-2">جزاكم الله خيراً</p>
+          </div>
+          <div class="border-t border-white/10 pt-8 text-sm text-gray-500">
+            <p>© 2026 رمضان كريم - جميع الحقوق محفوظة</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Global Variables
+      let quranData = [];
+      let adhkarData = [];
+      let allahNamesData = [];
+      let moshafData = [];
+      let tafsirData = [];
+      let bukhariData = [];
+      let muslimData = [];
+      let currentTasbih = { count: 0, target: 33, text: 'سبحان الله' };
+      let currentDay = 1;
+      let khatmahTarget = 1;
+      let pagesRead = 0;
+      const totalQuranPages = 604;
+      
+      // Pagination variables
+      let hadithCurrentPage = 1;
+      let hadithPerPage = 10;
+      let currentHadithCategory = 'random';
+      let currentHadiths = [];
+      
+      // Adhkar counter
+      let adhkarCounter = 0;
+
+      // Audio Control
+      const audioToggle = document.getElementById('audioToggle');
+      const audioIcon = document.getElementById('audioIcon');
+      const bgAudio = document.getElementById('backgroundAudio');
+      let isPlaying = false;
+
+      audioToggle.addEventListener('click', () => {
+        if (isPlaying) {
+          bgAudio.pause();
+          audioIcon.classList.remove('fa-volume-up');
+          audioIcon.classList.add('fa-volume-mute');
+        } else {
+          bgAudio.play();
+          audioIcon.classList.remove('fa-volume-mute');
+          audioIcon.classList.add('fa-volume-up');
+        }
+        isPlaying = !isPlaying;
+      });
+
+      // Countdown Timer
+      function updateCountdown() {
+        const now = new Date();
+        const maghrib = new Date();
+        maghrib.setHours(18, 20, 0);
+        const fajr = new Date();
+        fajr.setHours(4, 30, 0);
+        fajr.setDate(fajr.getDate() + 1);
+        let target = now < maghrib ? maghrib : fajr;
+        let ampm = now < maghrib ? 'م' : 'ص';
+        const diff = target - now;
+        let hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        const displayHours = hours > 12 ? hours - 12 : hours;
+        document.getElementById('hours').textContent = displayHours;
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        document.getElementById('ampm').textContent = ampm;
+      }
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
+
+      // Fetch All JSON Data
+      async function fetchAllData() {
+        try {
+          // Fetch Adhkar
+          const adhkarRes = await fetch('data/adkar.json');
+          adhkarData = await adhkarRes.json();
+          document.getElementById('adhkarStats').textContent = `${adhkarData.length} ذِكر من القرآن والسنة`;
+          displayAdhkarCategories();
+          
+          // Fetch Allah Names
+          const namesRes = await fetch('data/Allah-99-names.json');
+          allahNamesData = await namesRes.json();
+          displayAllahNames();
+          
+          // Fetch Mushaf Types
+          const moshafRes = await fetch('data/moshaf_types.json');
+          moshafData = await moshafRes.json();
+          displayMoshafTypes();
+          
+          // Fetch Tafsir
+          const tafsirRes = await fetch('data/tafsir.json');
+          const tafsirJson = await tafsirRes.json();
+          tafsirData = tafsirJson.tafasir.soar;
+          displayTafsirList();
+          
+          // Fetch Hadiths
+          const bukhariRes = await fetch('data/bukhari.json');
+          const bukhariJson = await bukhariRes.json();
+          bukhariData = bukhariJson.hadiths;
+          
+          const muslimRes = await fetch('data/muslim.json');
+          const muslimJson = await muslimRes.json();
+          muslimData = muslimJson.hadiths;
+          
+          document.getElementById('hadithStats').textContent = `${bukhariData.length.toLocaleString()} حديث من البخاري + ${muslimData.length.toLocaleString()} حديث من مسلم`;
+          
+          // Initialize Ramadan Tracker
+          initRamadanTracker();
+          
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+
+      // Fetch Quran from API
+      async function fetchQuran() {
+        try {
+          const response = await fetch('https://api.alquran.cloud/v1/quran/quran-uthmani');
+          const data = await response.json();
+          quranData = data.data.surahs;
+          displaySuras();
+          document.getElementById('quranLoading').style.display = 'none';
+          loadRandomVerse();
+        } catch (error) {
+          console.error('Error fetching Quran:', error);
+        }
+      }
+
+      function displaySuras() {
+        const list = document.getElementById('suraList');
+        list.innerHTML = '';
+        quranData.forEach((sura) => {
+          const div = document.createElement('div');
+          div.className = 'sura-item p-3 rounded-lg cursor-pointer transition-all mb-1 flex justify-between items-center';
+          div.onclick = () => showSura(sura, div);
+          div.innerHTML = `
+            <div class="flex-1">
+              <div class="font-bold text-lg">${sura.name}</div>
+              <div class="text-xs text-gray-400">${sura.ayahs.length} آية - ${sura.revelationType}</div>
+            </div>
+            <div class="text-ramadan-gold font-amiri text-xl ml-2">${sura.number}</div>
+          `;
+          list.appendChild(div);
+        });
+      }
+
+      function showSura(sura, element) {
+        document.querySelectorAll('.sura-item').forEach(el => el.classList.remove('active-sura'));
+        if (element) element.classList.add('active-sura');
+        document.getElementById('currentSuraName').textContent = `سورة ${sura.name}`;
+        document.getElementById('ayaCount').textContent = sura.ayahs.length;
+        let versesHtml = '<div class="quran-text text-ramadan-gold leading-loose p-4 space-y-4">';
+        sura.ayahs.forEach((ayah) => {
+          versesHtml += `
+            <span class="inline-block hover:text-white transition-colors cursor-pointer" title="آية ${ayah.numberInSurah}">
+              ${ayah.text} 
+              <span class="inline-flex items-center justify-center w-8 h-8 text-sm border border-ramadan-gold/50 rounded-full mr-1 text-ramadan-gold/70 align-middle">${ayah.numberInSurah}</span>
+            </span>
+          `;
+        });
+        versesHtml += '</div>';
+        document.getElementById('quranContent').innerHTML = versesHtml;
+      }
+
+      let currentFontSize = 1.5;
+      function changeFontSize(delta) {
+        currentFontSize += delta * 0.1;
+        if (currentFontSize < 1) currentFontSize = 1;
+        if (currentFontSize > 3) currentFontSize = 3;
+        document.querySelectorAll('.quran-text').forEach(el => el.style.fontSize = currentFontSize + 'rem');
+      }
+
+      // Random Verse
+      async function loadRandomVerse() {
+        const loading = document.getElementById('randomVerseLoading');
+        const content = document.getElementById('randomVerseContent');
+        loading.style.display = 'block';
+        content.classList.add('hidden');
+        try {
+          const randomSura = Math.floor(Math.random() * 114) + 1;
+          const response = await fetch(`https://api.alquran.cloud/v1/surah/${randomSura}`);
+          const data = await response.json();
+          if (data.data && data.data.ayahs) {
+            const ayahs = data.data.ayahs;
+            const randomAyah = ayahs[Math.floor(Math.random() * ayahs.length)];
+            document.getElementById('randomAyah').textContent = randomAyah.text;
+            document.getElementById('randomReference').textContent = `سورة ${data.data.name} - الآية ${randomAyah.numberInSurah}`;
+          }
+        } catch (error) {
+          document.getElementById('randomAyah').textContent = 'وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ';
+          document.getElementById('randomReference').textContent = 'سورة الذاريات - الآية 55';
+        }
+        loading.style.display = 'none';
+        content.classList.remove('hidden');
+      }
+
+      // Tafsir Section
+      function displayTafsirList() {
+        const list = document.getElementById('tafsirList');
+        list.innerHTML = '';
+        tafsirData.forEach((tafsir) => {
+          const div = document.createElement('div');
+          div.className = 'sura-item p-3 rounded-lg cursor-pointer transition-all mb-1';
+          div.onclick = () => playTafsir(tafsir);
+          div.innerHTML = `
+            <div class="font-bold">${tafsir.name}</div>
+            <div class="text-xs text-gray-400"><i class="fas fa-headphones ml-1"></i> استمع للتفسير</div>
+          `;
+          list.appendChild(div);
+        });
+      }
+
+      let currentTafsir = null;
+      let tafsirAudio = document.getElementById('tafsirAudio');
+
+      function playTafsir(tafsir) {
+        currentTafsir = tafsir;
+        document.getElementById('currentTafsirName').textContent = tafsir.name;
+        document.getElementById('tafsirPlayer').classList.remove('hidden');
+        document.getElementById('tafsirContent').innerHTML = `
+          <div class="text-center py-8">
+            <i class="fas fa-headphones text-6xl text-ramadan-gold/30 mb-4"></i>
+            <p class="text-gray-400">جاري تحميل التفسير...</p>
+          </div>
+        `;
+        tafsirAudio.src = tafsir.url;
+        tafsirAudio.load();
+        toggleTafsirPlay();
+      }
+
+      function toggleTafsirPlay() {
+        const btn = document.getElementById('tafsirPlayBtn');
+        const wave = document.getElementById('tafsirWave');
+        if (tafsirAudio.paused) {
+          tafsirAudio.play();
+          btn.innerHTML = '<i class="fas fa-pause"></i>';
+          wave.classList.remove('hidden');
+        } else {
+          tafsirAudio.pause();
+          btn.innerHTML = '<i class="fas fa-play"></i>';
+          wave.classList.add('hidden');
+        }
+      }
+
+      tafsirAudio.addEventListener('timeupdate', () => {
+        const progress = (tafsirAudio.currentTime / tafsirAudio.duration) * 100;
+        document.getElementById('tafsirProgress').style.width = progress + '%';
+        document.getElementById('tafsirCurrentTime').textContent = formatTime(tafsirAudio.currentTime);
+        document.getElementById('tafsirDuration').textContent = formatTime(tafsirAudio.duration || 0);
+      });
+
+      function formatTime(seconds) {
+        if (isNaN(seconds)) return '00:00';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      }
+
+      // Reciters Section
+      const reciters = [
+        { id: 'abdulbasit', name: 'عبد الباسط عبد الصمد' },
+        { id: 'minshawi', name: 'محمد صديق المنشاوي' },
+        { id: 'husary', name: 'محمود خليل الحصري' },
+        { id: 'shuraim', name: 'سعود الشريم' },
+        { id: 'sudais', name: 'عبد الرحمن السديس' },
+        { id: 'maher', name: 'ماهر المعيقلي' },
+        { id: 'ajmi', name: 'أحمد بن علي العجمي' },
+        { id: 'rifai', name: 'هاني الرفاعي' }
+      ];
+
+      let currentReciter = null;
+      let reciterAudio = document.getElementById('reciterAudio');
+
+      function displayReciters() {
+        const container = document.getElementById('recitersList');
+        container.innerHTML = '';
+        reciters.forEach((reciter) => {
+          const div = document.createElement('div');
+          div.className = 'reciter-card glass-effect rounded-xl p-4 text-center cursor-pointer';
+          div.onclick = () => selectReciter(reciter);
+          div.innerHTML = `
+            <div class="w-20 h-20 mx-auto mb-3 rounded-full bg-ramadan-gold/20 flex items-center justify-center">
+              <i class="fas fa-user text-3xl text-ramadan-gold"></i>
+            </div>
+            <h4 class="font-bold text-ramadan-gold text-sm">${reciter.name}</h4>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      function selectReciter(reciter) {
+        currentReciter = reciter;
+        document.getElementById('reciterPlayer').classList.remove('hidden');
+        document.getElementById('reciterName').textContent = reciter.name;
+        document.getElementById('currentSurahName').textContent = 'اختر سورة للاستماع';
+        showReciterSuraList();
+      }
+
+      function showReciterSuraList() {
+        const container = document.getElementById('reciterSuraList');
+        let html = '<div class="mt-4 grid grid-cols-5 md:grid-cols-10 gap-2 max-h-48 overflow-y-auto p-2">';
+        for (let i = 1; i <= 114; i++) {
+          html += `<button onclick="playReciterSura(${i})" class="p-2 rounded bg-white/5 hover:bg-ramadan-gold/20 text-sm transition-all">${i}</button>`;
+        }
+        html += '</div>';
+        container.innerHTML = html;
+      }
+
+      function playReciterSura(suraNum) {
+        const sura = quranData.find(s => s.number === suraNum);
+        if (sura) {
+          document.getElementById('currentSurahName').textContent = `سورة ${sura.name}`;
+          const reciterCode = getReciterCode(currentReciter.id);
+          const audioUrl = `https://server7.mp3quran.net/${reciterCode}/${suraNum.toString().padStart(3, '0')}.mp3`;
+          reciterAudio.src = audioUrl;
+          reciterAudio.load();
+          toggleReciterPlay();
+        }
+      }
+
+      function getReciterCode(id) {
+        const codes = {
+          'abdulbasit': 'abdulbasit',
+          'minshawi': 'minsh',
+          'husary': 'husary',
+          'shuraim': 'shur',
+          'sudais': 'sds',
+          'maher': 'maher',
+          'ajmi': 'ajm',
+          'rifai': 'rifai'
+        };
+        return codes[id] || 'abdulbasit';
+      }
+
+      function toggleReciterPlay() {
+        const icon = document.getElementById('reciterPlayIcon');
+        if (reciterAudio.paused) {
+          reciterAudio.play();
+          icon.classList.remove('fa-play');
+          icon.classList.add('fa-pause');
+        } else {
+          reciterAudio.pause();
+          icon.classList.remove('fa-pause');
+          icon.classList.add('fa-play');
+        }
+      }
+
+      reciterAudio.addEventListener('timeupdate', () => {
+        const progress = (reciterAudio.currentTime / reciterAudio.duration) * 100;
+        document.getElementById('reciterProgress').style.width = progress + '%';
+      });
+
+      // Radio Section
+      let radioAudio = document.getElementById('radioAudio');
+      let currentRadio = null;
+
+      function toggleRadio(station) {
+        const urls = {
+          'cairo': 'https://stream.radiojar.com/8s5u5tpdtwzuv',
+          'saudi': 'https://stream.radiojar.com/4wqre23kqtwtv'
+        };
+        const btn = document.getElementById(station + 'Btn');
+        const icon = document.getElementById(station + 'Icon');
+        const text = document.getElementById(station + 'Text');
+        const wave = document.getElementById(station + 'Wave');
+        
+        if (currentRadio === station && !radioAudio.paused) {
+          radioAudio.pause();
+          icon.classList.remove('fa-stop');
+          icon.classList.add('fa-play');
+          text.textContent = 'استمع الآن';
+          wave.classList.add('hidden');
+          btn.classList.remove('active');
+          currentRadio = null;
+        } else {
+          ['cairo', 'saudi'].forEach(s => {
+            document.getElementById(s + 'Wave').classList.add('hidden');
+            document.getElementById(s + 'Btn').classList.remove('active');
+            document.getElementById(s + 'Icon').classList.remove('fa-stop');
+            document.getElementById(s + 'Icon').classList.add('fa-play');
+            document.getElementById(s + 'Text').textContent = 'استمع الآن';
+          });
+          radioAudio.src = urls[station];
+          radioAudio.load();
+          radioAudio.play();
+          icon.classList.remove('fa-play');
+          icon.classList.add('fa-stop');
+          text.textContent = 'إيقاف';
+          wave.classList.remove('hidden');
+          btn.classList.add('active');
+          currentRadio = station;
+        }
+      }
+
+      // Hadith Section - ALL HADITHS with Pagination
+      function loadHadithCategory(category) {
+        currentHadithCategory = category;
+        hadithCurrentPage = 1;
+        
+        // Update buttons
+        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('hadith-btn-' + category).classList.add('active');
+        
+        const container = document.getElementById('hadithContainer');
+        const loading = document.getElementById('hadithLoading');
+        const pagination = document.getElementById('hadithPagination');
+        
+        loading.classList.remove('hidden');
+        container.innerHTML = '';
+        pagination.classList.add('hidden');
+        
+        setTimeout(() => {
+          if (category === 'random') {
+            const allHadiths = [...bukhariData.slice(0, 1000), ...muslimData.slice(0, 1000)];
+            const shuffled = allHadiths.sort(() => 0.5 - Math.random());
+            currentHadiths = shuffled.slice(0, 20);
+            displayHadiths(currentHadiths, false);
+          } else if (category === 'bukhari') {
+            currentHadiths = bukhariData;
+            displayHadiths(currentHadiths, true);
+          } else if (category === 'muslim') {
+            currentHadiths = muslimData;
+            displayHadiths(currentHadiths, true);
+          }
+          loading.classList.add('hidden');
+        }, 300);
+      }
+
+      function displayHadiths(hadiths, usePagination) {
+        const container = document.getElementById('hadithContainer');
+        container.innerHTML = '';
+        
+        let displayList = hadiths;
+        if (usePagination) {
+          const start = (hadithCurrentPage - 1) * hadithPerPage;
+          const end = start + hadithPerPage;
+          displayList = hadiths.slice(start, end);
+          updatePagination(hadiths.length);
+        }
+        
+        displayList.forEach((hadith, index) => {
+          const div = document.createElement('div');
+          div.className = 'hadith-item glass-effect rounded-xl p-6 border-r-4 border-ramadan-gold';
+          const actualIndex = usePagination ? (hadithCurrentPage - 1) * hadithPerPage + index + 1 : index + 1;
+          div.innerHTML = `
+            <div class="flex items-start gap-4">
+              <span class="flex-shrink-0 w-10 h-10 bg-ramadan-gold/20 text-ramadan-gold rounded-full flex items-center justify-center font-bold text-sm">${actualIndex}</span>
+              <div class="flex-1">
+                <p class="text-lg font-amiri leading-loose mb-3 text-gray-100">${hadith.text}</p>
+                <div class="flex items-center gap-2 text-sm text-gray-400">
+                  <span class="text-ramadan-gold">${currentHadithCategory === 'bukhari' ? 'صحيح البخاري' : currentHadithCategory === 'muslim' ? 'صحيح مسلم' : 'حديث عشوائي'}</span>
+                  <span>|</span>
+                  <span>حديث رقم ${hadith.hadith_number || hadith.hadithnumber}</span>
+                </div>
+              </div>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      function updatePagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / hadithPerPage);
+        const pagination = document.getElementById('hadithPagination');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevBtn = document.getElementById('prevPage');
+        const nextBtn = document.getElementById('nextPage');
+        
+        pagination.classList.remove('hidden');
+        pageInfo.textContent = `صفحة ${hadithCurrentPage} من ${totalPages}`;
+        prevBtn.disabled = hadithCurrentPage === 1;
+        nextBtn.disabled = hadithCurrentPage === totalPages;
+      }
+
+      function changePage(direction) {
+        hadithCurrentPage += direction;
+        displayHadiths(currentHadiths, true);
+        document.getElementById('hadithContainer').scrollTop = 0;
+      }
+
+      function searchHadith(query) {
+        if (!query.trim()) {
+          loadHadithCategory(currentHadithCategory);
+          return;
+        }
+        
+        const allHadiths = [...bukhariData, ...muslimData];
+        const filtered = allHadiths.filter(h => h.text.includes(query)).slice(0, 20);
+        currentHadiths = filtered;
+        displayHadiths(filtered, false);
+        document.getElementById('hadithPagination').classList.add('hidden');
+      }
+
+      // Adhkar Section - ALL CATEGORIES
+      function displayAdhkarCategories() {
+        const container = document.getElementById('adhkarCategories');
+        const categories = {};
+        
+        adhkarData.forEach(adhkar => {
+          if (!categories[adhkar.category]) {
+            categories[adhkar.category] = [];
+          }
+          categories[adhkar.category].push(adhkar);
+        });
+        
+        let html = '<h4 class="font-bold text-ramadan-gold mb-4 sticky top-0 bg-ramadan-dark/90 p-2 rounded">التصنيفات</h4>';
+        
+        Object.entries(categories).forEach(([category, items], index) => {
+          const shortName = category.length > 25 ? category.substring(0, 25) + '...' : category;
+          html += `
+            <button onclick="loadAdhkar('${category.replace(/'/g, "\\'")}')" class="category-btn w-full text-right p-3 rounded-lg mb-2 ${index === 0 ? 'active' : ''}" data-category="${category}">
+              <div class="flex justify-between items-center">
+                <span class="text-sm">${shortName}</span>
+                <span class="text-xs bg-ramadan-gold/20 text-ramadan-gold px-2 py-1 rounded-full">${items.length}</span>
+              </div>
+            </button>
+          `;
+        });
+        
+        container.innerHTML = html;
+        
+        // Load first category by default
+        const firstCategory = Object.keys(categories)[0];
+        if (firstCategory) {
+          loadAdhkar(firstCategory);
+        }
+      }
+
+      function loadAdhkar(category) {
+        const container = document.getElementById('adhkarContainer');
+        const loading = document.getElementById('adhkarLoading');
+        const counter = document.getElementById('adhkarCounter');
+        
+        // Update active category
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.category === category);
+        });
+        
+        loading.classList.remove('hidden');
+        counter.classList.add('hidden');
+        container.innerHTML = '';
+        
+        setTimeout(() => {
+          const filteredAdhkar = adhkarData.filter(a => a.category === category);
+          
+          filteredAdhkar.forEach((adhkar, index) => {
+            const div = document.createElement('div');
+            div.className = 'adhkar-item glass-effect rounded-xl p-6 border-r-4 border-ramadan-gold';
+            div.innerHTML = `
+              <div class="flex items-start gap-4">
+                <span class="flex-shrink-0 w-10 h-10 bg-ramadan-gold/20 text-ramadan-gold rounded-full flex items-center justify-center font-bold text-sm">${index + 1}</span>
+                <div class="flex-1">
+                  <p class="text-xl font-amiri leading-loose mb-4 text-gray-100">${adhkar.text}</p>
+                  ${adhkar.description ? `<p class="text-sm text-ramadan-gold/80 mb-3 bg-ramadan-gold/10 p-3 rounded-lg"><i class="fas fa-star ml-1"></i> ${adhkar.description}</p>` : ''}
+                  <div class="flex flex-wrap gap-3 items-center">
+                    <button onclick="incrementAdhkarCounter(${adhkar.count})" class="px-4 py-2 rounded-lg bg-ramadan-gold/20 text-ramadan-gold hover:bg-ramadan-gold/30 transition-all">
+                      <i class="fas fa-plus ml-1"></i> العد (${adhkar.count})
+                    </button>
+                    <span class="text-sm text-gray-400"><i class="fas fa-book ml-1"></i> ${adhkar.reference}</span>
+                  </div>
+                </div>
+              </div>
+            `;
+            container.appendChild(div);
+          });
+          
+          loading.classList.add('hidden');
+          counter.classList.remove('hidden');
+        }, 200);
+      }
+
+      function incrementAdhkarCounter(target) {
+        adhkarCounter++;
+        document.getElementById('adhkarCount').textContent = adhkarCounter;
+        if (adhkarCounter >= target) {
+          Swal.fire({
+            title: 'أحسنت!',
+            text: `أكملت ${target} مرات!`,
+            icon: 'success',
+            confirmButtonText: 'حسناً',
+            background: '#0f172a',
+            color: '#fff',
+            confirmButtonColor: '#fbbf24'
+          });
+        }
+      }
+
+      function resetAdhkarCounter() {
+        adhkarCounter = 0;
+        document.getElementById('adhkarCount').textContent = '0';
+      }
+
+      // Allah Names Section
+      function displayAllahNames() {
+        const container = document.getElementById('namesContainer');
+        container.innerHTML = '<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">';
+        
+        allahNamesData.forEach((name) => {
+          const div = document.createElement('div');
+          div.className = 'name-item glass-effect rounded-xl p-4 text-center cursor-pointer hover:transform hover:-translate-y-1 transition-all';
+          div.onclick = () => showNameDetails(name);
+          div.innerHTML = `
+            <div class="text-2xl font-amiri font-bold text-ramadan-gold mb-2">${name.name}</div>
+            <div class="text-xs text-gray-400">اضغط للتفاصيل</div>
+          `;
+          container.querySelector('.grid').appendChild(div);
+        });
+      }
+
+      function showNameDetails(name) {
+        Swal.fire({
+          title: name.name,
+          text: name.text,
+          icon: 'info',
+          confirmButtonText: 'حسناً',
+          background: '#0f172a',
+          color: '#fff',
+          confirmButtonColor: '#fbbf24'
+        });
+      }
+
+      // Mushaf Types Section
+      function displayMoshafTypes() {
+        const container = document.getElementById('moshafContainer');
+        container.innerHTML = '';
+        
+        moshafData.forEach((moshaf) => {
+          const div = document.createElement('div');
+          div.className = 'mushaf-card glass-effect rounded-2xl overflow-hidden';
+          div.innerHTML = `
+            <div class="h-40 bg-gradient-to-br from-ramadan-gold/20 to-ramadan-blue/20 flex items-center justify-center">
+              <i class="fas fa-book-quran text-6xl text-ramadan-gold/50"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-ramadan-gold mb-2">${moshaf.name}</h3>
+              <p class="text-gray-400 text-sm mb-4">${moshaf.description}</p>
+              <a href="${moshaf.download_link}" target="_blank" class="block w-full py-3 rounded-xl bg-ramadan-gold/20 text-ramadan-gold text-center hover:bg-ramadan-gold/30 transition-all">
+                <i class="fas fa-download ml-2"></i> تحميل المصحف
+              </a>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      // Ramadan Tracker Section
+      function initRamadanTracker() {
+        const strip = document.getElementById('daysStrip');
+        const today = new Date().getDate();
+        
+        for (let i = 1; i <= 30; i++) {
+          const btn = document.createElement('button');
+          btn.className = `day-card flex-shrink-0 w-16 h-16 rounded-xl glass-effect flex flex-col items-center justify-center ${i === today ? 'active' : ''}`;
+          btn.onclick = () => selectDay(i);
+          btn.innerHTML = `
+            <span class="text-xs text-gray-400">يوم</span>
+            <span class="text-xl font-bold text-ramadan-gold">${i}</span>
+          `;
+          strip.appendChild(btn);
+        }
+        
+        loadDayData(currentDay);
+        updateKhatmahProgress();
+        
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('ar-SA', options);
+      }
+
+      function selectDay(day) {
+        currentDay = day;
+        document.querySelectorAll('.day-card').forEach((btn, i) => {
+          btn.classList.toggle('active', i + 1 === day);
+        });
+        document.getElementById('currentDayTitle').textContent = `اليوم ${day} من رمضان`;
+        loadDayData(day);
+      }
+
+      function loadDayData(day) {
+        const saved = localStorage.getItem(`ramadan_day_${day}`);
+        const data = saved ? JSON.parse(saved) : { tasks: {}, note: '' };
+        
+        document.querySelectorAll('.task-checkbox').forEach(cb => {
+          cb.checked = data.tasks[cb.dataset.task] || false;
+        });
+        document.getElementById('dayNote').value = data.note || '';
+      }
+
+      function saveDayData() {
+        const tasks = {};
+        document.querySelectorAll('.task-checkbox').forEach(cb => {
+          tasks[cb.dataset.task] = cb.checked;
+        });
+        const data = {
+          tasks,
+          note: document.getElementById('dayNote').value
+        };
+        localStorage.setItem(`ramadan_day_${currentDay}`, JSON.stringify(data));
+      }
+
+      document.addEventListener('change', (e) => {
+        if (e.target.classList.contains('task-checkbox')) {
+          saveDayData();
+        }
+      });
+
+      document.getElementById('dayNote')?.addEventListener('input', saveDayData);
+
+      function setKhatmah(target) {
+        khatmahTarget = target;
+        document.querySelectorAll('.khatmah-btn').forEach(btn => {
+          btn.classList.remove('bg-ramadan-gold/30', 'border-ramadan-gold');
+          if (parseInt(btn.dataset.khatmah) === target) {
+            btn.classList.add('bg-ramadan-gold/30', 'border-ramadan-gold');
+          }
+        });
+        updateKhatmahProgress();
+      }
+
+      function updateKhatmahProgress() {
+        const targetPages = totalQuranPages * khatmahTarget;
+        const percent = Math.min((pagesRead / targetPages) * 100, 100);
+        document.getElementById('khatmahProgress').style.width = percent + '%';
+        document.getElementById('pagesRead').textContent = pagesRead;
+        document.getElementById('totalPages').textContent = targetPages;
+        document.getElementById('khatmahPercent').textContent = Math.round(percent);
+      }
+
+      // Tasbih Functions
+      function changeTasbihType(type) {
+        const texts = {
+          subhanallah: 'سبحان الله',
+          alhamdulillah: 'الحمد لله',
+          allahuakbar: 'الله أكبر',
+          lailaha: 'لا إله إلا الله',
+          salawat: 'اللهم صل على محمد'
+        };
+        const targets = {
+          subhanallah: 33,
+          alhamdulillah: 33,
+          allahuakbar: 33,
+          lailaha: 100,
+          salawat: 100
+        };
+        currentTasbih.text = texts[type];
+        currentTasbih.target = targets[type];
+        document.getElementById('tasbihText').textContent = currentTasbih.text;
+        document.getElementById('tasbihTarget').textContent = 'الهدف: ' + currentTasbih.target;
+        resetTasbih();
+      }
+
+      function incrementTasbih() {
+        currentTasbih.count++;
+        document.getElementById('tasbihCount').textContent = currentTasbih.count;
+        const circumference = 2 * Math.PI * 48;
+        const offset = circumference - (currentTasbih.count / currentTasbih.target) * circumference;
+        document.getElementById('progressCircle').style.strokeDashoffset = offset;
+        if (navigator.vibrate) navigator.vibrate(50);
+        
+        if (currentTasbih.count >= currentTasbih.target) {
+          Swal.fire({
+            title: 'أحسنت!',
+            text: 'أكملت العدد! بارك الله فيك',
+            icon: 'success',
+            confirmButtonText: 'البدء من جديد',
+            background: '#0f172a',
+            color: '#fff',
+            confirmButtonColor: '#fbbf24'
+          }).then(() => resetTasbih());
+        }
+      }
+
+      function resetTasbih() {
+        currentTasbih.count = 0;
+        document.getElementById('tasbihCount').textContent = '0';
+        document.getElementById('progressCircle').style.strokeDashoffset = 301.59;
+      }
+
+      function setTasbih(type, count) {
+        document.getElementById('tasbihType').value = type;
+        changeTasbihType(type);
+        scrollToSection('tasbih');
+      }
+
+      // Utility Functions
+      function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function toggleMobileMenu() {
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+      }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        fetchQuran();
+        fetchAllData();
+        displayReciters();
+      });
+    </script>
+  </body>
+</html>
